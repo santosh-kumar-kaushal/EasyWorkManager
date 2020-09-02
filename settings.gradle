@@ -1,0 +1,3 @@
+include ':workmanager'
+include ':app'
+rootProject.name = "EasyWorkManager"
