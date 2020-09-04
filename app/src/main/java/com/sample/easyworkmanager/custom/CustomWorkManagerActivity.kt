@@ -11,14 +11,14 @@ import com.sample.easyworkmanager.R
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CustomWorkManagerActivity:AppCompatActivity(), ITaskExecutionCallback {
+class CustomWorkManagerActivity : AppCompatActivity(), ITaskExecutionCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //Initialize your scheduler.
-        val ownTaskScheduler= OwnTaskScheduler(
+        val ownTaskScheduler = OwnTaskScheduler(
             this,
             this,
             this,
@@ -29,20 +29,20 @@ class CustomWorkManagerActivity:AppCompatActivity(), ITaskExecutionCallback {
     }
 
     override fun onTaskExecutionInProgress() {
-        Log.e("CustMainActivity","onTaskExecutionInProgress...")
+        Log.e("CustMainActivity", "onTaskExecutionInProgress...")
     }
 
     override fun onTaskExecutionCompleted() {
-        Log.e("CustMainActivity","onTaskExecutionCompleted.")
+        Log.e("CustMainActivity", "onTaskExecutionCompleted.")
     }
 
     override fun onTaskExecutionFailed() {
-        Log.e("CustMainActivity","onTaskExecutionFailed.")
+        Log.e("CustMainActivity", "onTaskExecutionFailed.")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun startBackgroundTask() {
-        Log.e("CustMainActivity","startBackgroundTask.")
+        Log.e("CustMainActivity", "startBackgroundTask.")
         fetchDataFromApi()
     }
 
@@ -62,7 +62,7 @@ class CustomWorkManagerActivity:AppCompatActivity(), ITaskExecutionCallback {
             inputStream.bufferedReader().use {
                 //To use this we @RequiresApi(Build.VERSION_CODES.N)
                 it.lines().forEach { line ->
-                    Log.e("CustMainActivity",line)
+                    Log.e("CustMainActivity", line)
                 }
             }
         }
