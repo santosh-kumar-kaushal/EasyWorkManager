@@ -19,8 +19,7 @@ class MainActivity : AppCompatActivity(),ITaskExecutionCallback {
 
         //Build Task scheduler with different options.
         TaskScheduler.Builder(this,this).
-        setListener(this).setWorkType(WorkType.PERIODIC)
-            .setPeriodicTime(min.toLong()).build()
+        setListener(this).setWorkType(WorkType.ONETIME).build()
     }
 
     override fun onTaskExecutionInProgress() {
