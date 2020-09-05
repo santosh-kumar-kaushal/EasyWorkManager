@@ -4,14 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.library.workmanager.ITaskExecutionCallback
 import com.library.workmanager.TaskScheduler
 import com.library.workmanager.WorkType
-import java.net.HttpURLConnection
-import java.net.URL
 
-class MainActivity : AppCompatActivity(), ITaskExecutionCallback {
+class MainActivity : BaseActivity(), ITaskExecutionCallback {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val min = 20 * 60000
@@ -19,7 +18,10 @@ class MainActivity : AppCompatActivity(), ITaskExecutionCallback {
 
         //Build Task scheduler with different options.
         TaskScheduler.Builder(this, this).setListener(this).setWorkType(WorkType.ONETIME).build()
-        
+        viewModel.getData.observe(this, Observer {
+            Log.e("MainActivity", it)
+        })
+
     }
 
     override fun onTaskExecutionInProgress() {
@@ -37,29 +39,7 @@ class MainActivity : AppCompatActivity(), ITaskExecutionCallback {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun startBackgroundTask() {
         Log.e("MainActivity", "startBackgroundTask.")
-        fetchDataFromApi()
-    }
-
-    /**
-     * Sample api call needs to be called on @startBackgroundTask().
-     */
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun fetchDataFromApi() {
-        val url = URL("http://www.google.com/")
-
-        with(url.openConnection() as HttpURLConnection) {
-            // optional default is GET
-            requestMethod = "GET"
-
-            println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
-
-            inputStream.bufferedReader().use {
-                //To use this we @RequiresApi(Build.VERSION_CODES.N)
-                it.lines().forEach { line ->
-                    Log.e("MainActivity", line)
-                }
-            }
-        }
+        viewModel.fetchDataFromApi()
     }
 
 }
